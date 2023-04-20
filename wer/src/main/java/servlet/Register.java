@@ -28,7 +28,8 @@ public class Register extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (request.getParameter("mail")!= "" && request.getParameter("pass")!= "") {
             postService.newUser(request);
-            getServletContext().getRequestDispatcher("/home.jsp").forward(request, response);
+            request.setAttribute("postList", this.postService.listPosts(request));
+            getServletContext().getRequestDispatcher("/postA.jsp").forward(request, response);
         } else {
             getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);        }
     }

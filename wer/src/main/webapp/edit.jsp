@@ -75,7 +75,10 @@
                     <input type="text" name="message" class="form-control form-control-lg"/>
                     <label class="form-label">Mensaje</label>
                 </div>
-
+                <div class="form-outline form-white mb-4">
+                    <input type="file" name="filePost" accept="image/png, image/jpeg"/>
+                    <label class="form-label">Imagen</label>
+                </div>
                 <div class="container position-relative px-4 px-lg-5">
                     <div class="row gx-4 gx-lg-5 justify-content-center">
                         <button class="nav-link px-lg-3 py-3 py-lg-4" type="submit">Post</button>

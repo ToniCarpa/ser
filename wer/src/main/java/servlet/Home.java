@@ -31,12 +31,12 @@ public class Home extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (this.postService.checkUser(req)) {
             req.setAttribute("postList", this.postService.listPosts(req));
-            getServletContext().getRequestDispatcher("/home.jsp").forward(req, resp);
+            getServletContext().getRequestDispatcher("/postA.jsp").forward(req, resp);
             if(req.getParameter("like") != null){
                 postService.sumLikes(req);
+                getServletContext().getRequestDispatcher("/postA.jsp").forward(req, resp);
             }
         } else {
-            req.setAttribute("error", "no estas registrado");
             getServletContext().getRequestDispatcher("/register.jsp").forward(req, resp);
         }
     }

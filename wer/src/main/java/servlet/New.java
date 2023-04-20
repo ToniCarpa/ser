@@ -16,10 +16,10 @@ import java.sql.SQLException;
         maxFileSize = 1024 * 1024 * 5,
         maxRequestSize = 1024 * 1024 * 5 * 5)
 @WebServlet(name = "edit", urlPatterns = {"/edit.do", "/edit"})
-public class Edit extends HttpServlet {
+public class New extends HttpServlet {
     private PostService postService;
 
-    public Edit() throws SQLException, ClassNotFoundException {
+    public New() throws SQLException, ClassNotFoundException {
         super();
         this.postService = new PostService();
     }
@@ -29,14 +29,11 @@ public class Edit extends HttpServlet {
     }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int id = Integer.parseInt(req.getParameter("id"));
         if (this.postService.checkUser(req)) {
-            if (req.getParameter("delete") != null) {
-                this.postService.deletePost(req);
-            } else if (req.getParameter("new") != null) {
+            if (req.getParameter("new") != null) {
                 postService.newPost(req);
-            } else {
-                getServletContext().getRequestDispatcher("/user.jsp").forward(req, resp);
+                req.setAttribute("postList", this.postService.listPosts(req));
+                getServletContext().getRequestDispatcher("/edit.jsp").forward(req, resp);
             }
         } else {
             getServletContext().getRequestDispatcher("/index.jsp").forward(req, resp);

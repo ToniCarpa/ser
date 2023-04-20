@@ -126,7 +126,7 @@ public class PostService {
     }
     // COMMENTS
 
-    // --------------------------------------------------PROFILE--------------------------------------------------------
+    // --------------------------------------------------USER--------------------------------------------------------
 
     // USER POSTLIST
     public ArrayList<Post> listUserPost(HttpServletRequest request) {
