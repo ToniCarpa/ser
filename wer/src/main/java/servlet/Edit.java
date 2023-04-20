@@ -23,7 +23,10 @@ public class Edit extends HttpServlet {
         super();
         this.postService = new PostService();
     }
-
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        getServletContext().getRequestDispatcher("/edit.jsp").forward(req, resp);
+    }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter("id"));
@@ -33,10 +36,10 @@ public class Edit extends HttpServlet {
             } else if (req.getParameter("new") != null) {
                 postService.newPost(req);
             } else {
-                getServletContext().getRequestDispatcher("jsp/user.jsp").forward(req, resp);
+                getServletContext().getRequestDispatcher("/user.jsp").forward(req, resp);
             }
         } else {
-            getServletContext().getRequestDispatcher("index.jsp").forward(req, resp);
+            getServletContext().getRequestDispatcher("/index.jsp").forward(req, resp);
         }
     }
 

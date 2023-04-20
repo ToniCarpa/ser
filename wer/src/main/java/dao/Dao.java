@@ -102,7 +102,7 @@ public class Dao {
                     u.setPassword(rs.getString("password"));
                     u.setEmail(rs.getString("email"));
                     u.setLinkedin(rs.getString("linkedin"));
-                    u.setGitlab(rs.getString("gitlad"));
+                    u.setGitlab(rs.getString("gitlab"));
                 }
             }
         }
@@ -124,7 +124,7 @@ public class Dao {
                     u.setPassword(rs.getString("password"));
                     u.setEmail(rs.getString("email"));
                     u.setLinkedin(rs.getString("linkedin"));
-                    u.setGitlab(rs.getString("gitlad"));
+                    u.setGitlab(rs.getString("gitlab"));
                 }
             }
         }
@@ -146,7 +146,7 @@ public class Dao {
                             rs.getString("password"),
                             rs.getString("email"),
                             rs.getString("linkedin"),
-                            rs.getString("gitlad"));
+                            rs.getString("gitlab"));
                 }
             }
         }
@@ -167,7 +167,7 @@ public class Dao {
                             rs.getString("password"),
                             rs.getString("email"),
                             rs.getString("linkedin"),
-                            rs.getString("gitlad")));
+                            rs.getString("gitlab")));
                 }
             }
         }

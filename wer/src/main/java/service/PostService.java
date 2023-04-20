@@ -18,34 +18,37 @@ import java.util.ArrayList;
 public class PostService {
     private Dao dao;
 
-    public PostService()  {
+    public PostService() {
         this.dao = new Dao();
     }
 
 
     // --------------------------------------------------LOGIN-------------------------------------------------------
 
+    /*
     public Boolean getUser(HttpServletRequest req, String mail, String pass) {
         try {
             Usuari u = dao.getUsuarioByMailPass(mail, pass);
             if (u != null) {
-                req.getSession().setAttribute("id", u.getId()+"");
+                req.getSession().setAttribute("id", u.getId() + "");
                 req.setAttribute("postList", dao.allPostList());
                 return true;
             }
         } catch (SQLException e) {
             req.setAttribute("error", Constants.ERROR);
         }
-     return  false;
+        return false;
     }
+    */
 
-        public boolean checkUser(HttpServletRequest request) {
+    //----------------------------------------
+    public boolean checkUser(HttpServletRequest request) {
         String password = request.getParameter("pass");
-        String email =request.getParameter("mail"); //.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+        String email = request.getParameter("mail"); //.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
 
         try {
             Usuari u = existUser(email, password);
-            if(u!= null) request.getSession().setAttribute("id", u.getId()+"");
+            if (u != null) request.getSession().setAttribute("id", u.getId() + "");
             request.setAttribute("postList", dao.allPostList());
             return true;
         } catch (SQLException e) {
@@ -62,7 +65,7 @@ public class PostService {
 
     // --------------------------------------------------REGSITER-------------------------------------------------------
 
-    public Usuari newUser( HttpServletRequest request) {
+    public Usuari newUser(HttpServletRequest request) {
         HttpSession respuesta = request.getSession(true);
         try {
             int id = Integer.parseInt(request.getParameter("id"));
@@ -93,12 +96,11 @@ public class PostService {
     // --------------------------------------------------HOME-----------------------------------------------------------
 
 
-
     // ALL POSTS
-    public ArrayList<Post> listPosts( HttpServletRequest request) {
+    public ArrayList<Post> listPosts(HttpServletRequest request) {
         try {
             ArrayList<Post> listPost = dao.allPostList();
-            request.setAttribute("listPost", listPost);
+            request.setAttribute("postList", listPost);
             return listPost;
         } catch (SQLException e) {
             request.setAttribute("error", Constants.ERROR);
@@ -107,11 +109,11 @@ public class PostService {
     }
 
     // LIKES
-    public boolean sumLikes( HttpServletRequest request) {
+    public boolean sumLikes(HttpServletRequest request) {
         try {
             int id = (int) request.getSession().getAttribute("id");
             request.setAttribute("id", id);
-            request.setAttribute("posts", dao.allPostList());
+            request.setAttribute("postList", dao.allPostList());
             ArrayList<Post> postlist = this.dao.allPostList();
             for (Post o : postlist) {
                 dao.likes(o.getId(), o.getLikes());
@@ -127,7 +129,7 @@ public class PostService {
     // --------------------------------------------------PROFILE--------------------------------------------------------
 
     // USER POSTLIST
-    public ArrayList<Post> listUserPost( HttpServletRequest request) {
+    public ArrayList<Post> listUserPost(HttpServletRequest request) {
         try {
             int id = (int) request.getAttribute("id");
 
@@ -144,9 +146,9 @@ public class PostService {
     // --------------------------------------------------EDIT-----------------------------------------------------------
 
     //NEW POST
-    public ArrayList<Post> newPost( HttpServletRequest request) {
-        String title = new String(request.getParameter("titleP").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
-        String message = new String(request.getParameter("messageP").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+    public ArrayList<Post> newPost(HttpServletRequest request) {
+        String title = new String(request.getParameter("title").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+        String message = new String(request.getParameter("message").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
         int id = Integer.parseInt(request.getParameter("id"));
 
         try {
@@ -154,7 +156,7 @@ public class PostService {
             dao.creaPost(new Post(dao.getUsuarioById(id), title, message, new Date(System.currentTimeMillis())), part);
 
             request.getSession().setAttribute("id", id);
-            ArrayList<Post> listPost = this.dao.allPostList();
+            ArrayList<Post> listPost = this.dao.allPostListUser(id);
             request.setAttribute("listPost", listPost);
             return listPost;
         } catch (SQLException e) {
@@ -166,7 +168,7 @@ public class PostService {
     }
 
     // DELETE POST
-    public boolean deletePost( HttpServletRequest request) {
+    public boolean deletePost(HttpServletRequest request) {
         HttpSession respuesta = request.getSession(true);
         try {
             int id = (int) request.getSession().getAttribute("id");

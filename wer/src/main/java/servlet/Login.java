@@ -23,26 +23,30 @@ public class Login extends HttpServlet {
         this.postService = new PostService();
     }
 
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        getServletContext().getRequestDispatcher("/login.jsp").forward(req, resp);
+    }
 
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+/*
         String password = req.getParameter("pass");
         String email = req.getParameter("mail");
         if (this.postService.getUser(req, email, password)) {
             req.setAttribute("listPost", this.postService.listPosts(req));
-            getServletContext().getRequestDispatcher("/jsp/home.jsp").forward(req, resp);
+            getServletContext().getRequestDispatcher("/home.jsp").forward(req, resp);
         } else {
-            getServletContext().getRequestDispatcher("/jsp/register.jsp").forward(req, resp);
+            getServletContext().getRequestDispatcher("/register.jsp").forward(req, resp);
         }
     }
-     /*
+*/
         if (this.postService.checkUser(req)) {
-
-            getServletContext().getRequestDispatcher("/jsp/home.jsp").forward(req, resp);
+            req.setAttribute("postList", this.postService.listPosts(req));
+            getServletContext().getRequestDispatcher("/postA.jsp").forward(req, resp);
         } else {
-            getServletContext().getRequestDispatcher("/jsp/register.jsp").forward(req, resp);
+            getServletContext().getRequestDispatcher("/register.jsp").forward(req, resp);
         }
     }
-       */
 }
 
 

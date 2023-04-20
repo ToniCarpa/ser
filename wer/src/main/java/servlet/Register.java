@@ -21,15 +21,15 @@ public class Register extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("/jsp/register.jsp").forward(req, resp);
+        getServletContext().getRequestDispatcher("/register.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (request.getParameter("mail")!= "" && request.getParameter("pass")!= "") {
             postService.newUser(request);
-            getServletContext().getRequestDispatcher("/jsp/home.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/home.jsp").forward(request, response);
         } else {
-            getServletContext().getRequestDispatcher("/../index.jsp").forward(request, response);        }
+            getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);        }
     }
 }

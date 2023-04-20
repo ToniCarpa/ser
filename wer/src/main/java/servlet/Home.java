@@ -18,24 +18,26 @@ import java.sql.SQLException;
 public class Home extends HttpServlet {
     private PostService postService;
 
-    public Home() throws  ClassNotFoundException {
+    public Home() {
         super();
         this.postService = new PostService();
     }
-
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        getServletContext().getRequestDispatcher("/home.jsp").forward(req, resp);
+    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int id = Integer.parseInt(req.getParameter("id"));
         if (this.postService.checkUser(req)) {
-            req.setAttribute("listPost", this.postService.listPosts(req));
-            getServletContext().getRequestDispatcher("/jsp/home.jsp").forward(req, resp);
+            req.setAttribute("postList", this.postService.listPosts(req));
+            getServletContext().getRequestDispatcher("/home.jsp").forward(req, resp);
             if(req.getParameter("like") != null){
                 postService.sumLikes(req);
             }
         } else {
             req.setAttribute("error", "no estas registrado");
-            getServletContext().getRequestDispatcher("/jsp/register.jsp").forward(req, resp);
+            getServletContext().getRequestDispatcher("/register.jsp").forward(req, resp);
         }
     }
 }
